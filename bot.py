@@ -104,7 +104,7 @@ index_html = """
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-<title>MovieZone - Your Entertainment Hub</title>
+<title>MovieFlix9u - Your Entertainment Hub</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap');
   :root { --netflix-red: #E50914; --netflix-black: #141414; --text-light: #f5f5f5; --text-dark: #a0a0a0; --nav-height: 60px; }
@@ -183,7 +183,7 @@ index_html = """
     {{ render_carousel('Web Series', latest_series, 'webseries') }}
     {{ render_carousel('Recently Added', recently_added_full, 'recently_added_all') }}
     {{ render_carousel('Coming Soon', coming_soon_movies, 'coming_soon') }}
-    <div class="telegram-join-section"><i class="fa-brands fa-telegram telegram-icon"></i><h2>Join Our Telegram Channel</h2><p>Get the latest movie updates, news, and direct download links right on your phone!</p><a href="https://t.me/+60goZWp-FpkxNzVl" target="_blank" class="telegram-join-button"><i class="fa-brands fa-telegram"></i> Join Main Channel</a></div>
+    <div class="telegram-join-section"><i class="fa-brands fa-telegram telegram-icon"></i><h2>Join Our Telegram Channel</h2><p>Get the latest movie updates, news, and direct download links right on your phone!</p><a href="https://t.me/MovieFlix9u" target="_blank" class="telegram-join-button"><i class="fa-brands fa-telegram"></i> Join Main Channel</a></div>
   {% endif %}
 </main>
 <nav class="bottom-nav"><a href="{{ url_for('home') }}" class="nav-item {% if request.endpoint == 'home' %}active{% endif %}"><i class="fas fa-home"></i><span>Home</span></a><a href="{{ url_for('genres_page') }}" class="nav-item {% if request.endpoint == 'genres_page' %}active{% endif %}"><i class="fas fa-layer-group"></i><span>Genres</span></a><a href="{{ url_for('contact') }}" class="nav-item {% if request.endpoint == 'contact' %}active{% endif %}"><i class="fas fa-envelope"></i><span>Request</span></a></nav>
@@ -205,7 +205,7 @@ detail_html = """
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-<title>{{ movie.title if movie else "Content Not Found" }} - MovieZone</title>
+<title>{{ movie.title if movie else "Content Not Found" }} - MovieFlix9u</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap');
   :root { --netflix-red: #E50914; --netflix-black: #141414; --text-light: #f5f5f5; --text-dark: #a0a0a0; }
@@ -290,8 +290,8 @@ detail_html = """
           {% if movie.files %}
             <h3 class="section-title">Get from Telegram</h3>
             {% for file in movie.files | sort(attribute='quality') %}
-               <a href="https://t.me/{{ bot_username }}?start={{ movie._id }}_{{ file.quality }}" class="action-btn" style="background-color: #2AABEE; display: block; text-align:center; margin-top:10px; margin-bottom: 0;">
-                 <i class="fa-brands fa-telegram"></i> Get {{ file.quality }}
+               <a href="https://t.me/{bot_username}?start={movie._id}_{file.quality}" class="action-btn" style="background-color: #2AABEE; display: block; text-align:center; margin-top:10px; margin-bottom: 0;">
+                 <i class="fa-brands fa-telegram"></i> Get {file.quality}
                </a>
             {% endfor %}
           {% endif %}
@@ -303,8 +303,8 @@ detail_html = """
           {% if movie.episodes %}
             {% for ep in movie.episodes | sort(attribute='episode_number') | sort(attribute='season') %}
               <div class="episode-item">
-                  <span class="episode-title">Season {{ ep.season }} - Episode {{ ep.episode_number }}</span>
-                  <a href="https://t.me/{{ bot_username }}?start={{ movie._id }}_{{ ep.season }}_{{ ep.episode_number }}" class="episode-button" style="background-color: #2AABEE;"><i class="fa-brands fa-telegram"></i> Get Episode</a>
+                  <span class="episode-title">Season { ep.season } - Episode {ep.episode_number}</span>
+                  <a href="https://t.me/{bot_username}?start={movie._id}_{ep.season}_{ep.episode_number}" class="episode-button" style="background-color: #2AABEE;"><i class="fa-brands fa-telegram"></i> Get Episode</a>
               </div>
             {% endfor %}
           {% else %}
@@ -330,7 +330,7 @@ document.querySelectorAll('.carousel-arrow').forEach(button => { button.addEvent
 
 genres_html = """
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" /><title>{{ title }} - MovieZone</title>
+<html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" /><title>{title} - MovieFlix9u</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap');
   :root { --netflix-red: #E50914; --netflix-black: #141414; --text-light: #f5f5f5; }
@@ -343,8 +343,8 @@ genres_html = """
   @media (max-width: 768px) { .main-container { padding: 80px 15px 30px; } .page-title { font-size: 2.2rem; } .genre-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; } .genre-card { font-size: 1.1rem; padding: 25px 15px; } }
 </style><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"></head>
 <body>
-<div class="main-container"><a href="{{ url_for('home') }}" class="back-button"><i class="fas fa-arrow-left"></i> Back to Home</a><h1 class="page-title">{{ title }}</h1>
-<div class="genre-grid">{% for genre in genres %}<a href="{{ url_for('movies_by_genre', genre_name=genre) }}" class="genre-card"><span>{{ genre }}</span></a>{% endfor %}</div></div>
+<div class="main-container"><a href="{{ url_for('home') }}" class="back-button"><i class="fas fa-arrow-left"></i> Back to Home</a><h1 class="page-title">{title}</h1>
+<div class="genre-grid">{% for genre in genres %}<a href="{{ url_for('movies_by_genre', genre_name=genre) }}" class="genre-card"><span>{genre }</span></a>{% endfor %}</div></div>
 {% if ad_settings.popunder_code %}{{ ad_settings.popunder_code|safe }}{% endif %}
 {% if ad_settings.social_bar_code %}{{ ad_settings.social_bar_code|safe }}{% endif %}
 </body></html>
